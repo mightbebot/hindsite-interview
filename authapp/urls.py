@@ -1,12 +1,11 @@
 from django.urls import path
-from .views import RegisterPage, edit, dashboard, register
 from django.urls import reverse_lazy
 from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetDoneView, PasswordResetView,
                                        PasswordResetCompleteView,
                                        PasswordChangeView, PasswordChangeDoneView,
                                        PasswordResetDoneView)
 
-from .views import TaskList, TaskDetail, TaskCreate, TaskUpdate, DeleteView, TaskReorder, RegisterPage
+from .views import edit, dashboard, TaskList, TaskDetail, TaskCreate, TaskUpdate, DeleteView, TaskReorder, RegisterPage
 
 app_name = 'authapp'
 
