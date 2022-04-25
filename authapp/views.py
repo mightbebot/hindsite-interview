@@ -1,9 +1,8 @@
 from django.http import request
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-# from .forms import UserRegistration, UserEditForm  
+from django.contrib.auth.decorators import login_required 
 
-from .models import Employee, Task
+from .models import Task
 
 # Create your views here.
 
@@ -29,25 +28,21 @@ def dashboard(request):
     }
     return render(request, 'authapp/dashboard.html', context=context)
 
-
-def register(request):
+@login_required
+def edit(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST or None)
-        if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.set_password(
-                form.cleaned_data.get('password')
-            )
-            new_user.save()
-            return render(request, 'authapp/register_done.html')
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your fields were successfully updated!')
     else:
-        form = CustomUserCreationForm()
-
+        user_form = UserEditForm(instance=request.user)
     context = {
-        "form": form
+        'form': user_form,
     }
+    return render(request, 'authapp/edit.html', context=context)
 
-    return render(request, 'authapp/register.html', context=context)
 
 class RegisterPage(FormView):
     template_name = 'authapp/register.html'
@@ -65,23 +60,6 @@ class RegisterPage(FormView):
         if self.request.user.is_authenticated:
             return render(request, 'authapp/register_done.html',{})
         return super(RegisterPage, self).get(*args, **kwargs)
-
-
-
-@login_required
-def edit(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user,
-                                 data=request.POST)
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Your fields were successfully updated!')
-    else:
-        user_form = UserEditForm(instance=request.user)
-    context = {
-        'form': user_form,
-    }
-    return render(request, 'authapp/edit.html', context=context)
 
 
 class TaskList(LoginRequiredMixin, ListView):

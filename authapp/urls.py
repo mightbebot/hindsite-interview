@@ -2,7 +2,7 @@ from django.urls import path
 from .views import RegisterPage, edit, dashboard, register
 from django.urls import reverse_lazy
 from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetDoneView, PasswordResetView,
-                                       PasswordResetCompleteView, PasswordResetConfirmView,
+                                       PasswordResetCompleteView,
                                        PasswordChangeView, PasswordChangeDoneView,
                                        PasswordResetDoneView)
 
