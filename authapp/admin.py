@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Employee
+from .models import Organisation, Employee
 # Register your models here.
-admin.site.register(Task)
+admin.site.register(Organisation)
 admin.site.register(Employee)

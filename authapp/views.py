@@ -48,7 +48,7 @@ class RegisterPage(FormView):
     template_name = 'authapp/register.html'
     form_class = CustomUserCreationForm
     redirect_authenticated_user = True
-    success_url = reverse_lazy('tasks')
+    success_url = reverse_lazy('authapp:tasks')
 
     def form_valid(self, form):
         user = form.save()
